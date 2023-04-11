@@ -1,10 +1,10 @@
-local status, mason = pcall(require,'mason')
+local status, mason = pcall(require, "mason")
 if not status then
 	vim.notify("mason not find!")
 	return
 end
 
-local status, mason_config = pcall(require,"mason-lspconfig")
+local status, mason_config = pcall(require, "mason-lspconfig")
 if not status then
 	vim.notify("mason-lspconfig not find!")
 	return
@@ -18,17 +18,17 @@ if not status then
 end
 
 mason.setup({
-  ui = {
-    icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗",
-    },
-  },
+	ui = {
+		icons = {
+			package_installed = "✓",
+			package_pending = "➜",
+			package_uninstalled = "✗",
+		},
+	},
 })
 
 -- mason-lspconfig uses the `lspconfig` server names in the APIs it exposes - not `mason.nvim` package names
--- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
+-- https://github.com/williamboman/mason-lspconfig.nvim
 -- 需要安装的语言服务器
 mason_config.setup({
 	ensure_installed = {
@@ -37,24 +37,29 @@ mason_config.setup({
 		-- 改完发现还是有bug,寄
 		"lua_ls",
 		"bashls",
+		-- 首次安装cmake时报错:ERROR: Could not install packages due to an OSError: Missing dependencies for SOCKS support
+		-- 是开了代理导致的,unproxy关了就行了
+		-- 有发现cmake并不是Makefile,南蚌
 		-- "cmake",
 		"clangd",
-		"html","cssls",
+		"html",
+		"cssls",
 	},
 })
 
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local servers = {
 	lua_ls = require("lsp.config.lua"), -- lua/lsp/config/lua.lua
-	-- bashls = require("lsp.config.bash"),
+	bashls = require("lsp.config.bash"),
 	-- cmake = require("lsp.config.cmake"),
-	-- clangd = require("lsp.config.clang"),
+	clangd = require("lsp.config.c_cpp"),
 	-- html = require("lsp.config.html"),
 	-- cssls = require("lsp.config.css"),
 }
 
 -- 需要对每个Server进行特定的初始化配置
 for name, config in pairs(servers) do
-	if config ~= nil and type(config)=="table" then
+	if config ~= nil and type(config) == "table" then
 		-- print(lspconfig[name]) 出现bug时,可以通过print来进行调试
 		config.on_setup(lspconfig[name])
 	else
@@ -64,7 +69,7 @@ end
 
 -- nvim-lsp-installer不再维护,更换为manson
 -- require("nvim-lsp-installer").setup({
-	-- 设置自动安装Language Server
+-- 设置自动安装Language Server
 -- 	automatic_installation = true,
 -- })
 
@@ -78,7 +83,6 @@ end
 -- 首先创建了一个servers字典变量,用于存放所有的LSP Server配置
 -- sumneko_lua是nvim-lsp-installer中lua语言的server name,具体语言对应的server name在该网址中可查https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fwilliamboman%2Fnvim-lsp-installer%23available-lsps
 
-
 -- for name,_ in pairs(servers) do
 -- 	local server_is_found, server = lsp_installer.get_server(name)
 -- 	if server_is_found then
@@ -88,5 +92,3 @@ end
 -- 		end
 -- 	end
 -- end
-
-

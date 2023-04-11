@@ -41,22 +41,22 @@ pluginKeys.nvimTreeList = {
 	-- 打开文件or文件夹
 	{ key = { "<CR>", "o", "<2-LeftMouse>" }, action = "edit" },
 	-- 分屏打开文件
-	{ key = "v",                              action = "vsplit" },
-	{ key = "h",                              action = "split" },
+	{ key = "v", action = "vsplit" },
+	{ key = "h", action = "split" },
 	-- 显示隐藏文件
 	-- 显示自定义隐藏文件
-	{ key = "i",                              action = "toggle_custom" },
-	{ key = ".",                              action = "toggle_dotfiles" },
+	{ key = "i", action = "toggle_custom" },
+	{ key = ".", action = "toggle_dotfiles" },
 	-- 文件操作
-	{ key = "<C-r>",                          action = "refresh" },
+	{ key = "<C-r>", action = "refresh" },
 	-- 创建文件夹, a --> xxx/ 即可
-	{ key = "d",                              action = "remove" },
-	{ key = "a",                              action = "create" },
-	{ key = "r",                              action = "rename" },
-	{ key = "x",                              action = "cut" },
-	{ key = "c",                              action = "copy" },
-	{ key = "p",                              action = "paste" },
-	{ key = "I",                              action = "toggle_file_info" },
+	{ key = "d", action = "remove" },
+	{ key = "a", action = "create" },
+	{ key = "r", action = "rename" },
+	{ key = "x", action = "cut" },
+	{ key = "c", action = "copy" },
+	{ key = "p", action = "paste" },
+	{ key = "I", action = "toggle_file_info" },
 	-- { key = "s", action = "system_open" },
 }
 
@@ -99,16 +99,16 @@ map("n", "<C-f>", ":Telescope live_grep<CR>", opt)
 
 -- 定义LSP快捷键(暂时)
 -- 跳转到定义
-map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opt)
+map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opt)
 -- 跳转到声明(不支持)
 -- map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opt)
 -- 跳转到实现(同样不支持)
 -- map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opt)
 -- 代码悬停提示
-map("n", "gh", '<cmd>lua vim.lsp.buf.hover()<CR>', opt)
+map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opt)
 map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opt)
 -- 代码保存+格式化
-map("n", "<C-s>", "<cmd>lua vim.lsp.buf.format()<CR> | <cmd>w<CR>", opt)
+map("n", "<C-s>", "<cmd>lua vim.lsp.buf.format{async=true}<CR>", opt)
 -- 显示浮窗(一般是显示报错)
 map("n", "se", "<cmd>lua vim.diagnostic.open_float()<CR>", opt)
 
@@ -120,12 +120,12 @@ pluginKeys.cmp = function(cmp)
 		-- 取消
 		["<C-,>"] = cmp.mapping({
 			i = cmp.mapping.abort(),
-			c = cmp.mapping.close()
+			c = cmp.mapping.close(),
 		}),
-		-- 确认
-		["<CR>"] = cmp.mapping.confirm({
+		-- 确认(使用Tab是因为<CR>非常容易误触)
+		["<Tab>"] = cmp.mapping.confirm({
 			select = true,
-			behavior = cmp.ConfirmBehavior.Replace
+			behavior = cmp.ConfirmBehavior.Replace,
 		}),
 		-- 需要注意的是,命令行中的快捷键上下选择被设置成了官方默认Tab/Shift+Tab
 		-- 上一个

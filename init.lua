@@ -26,3 +26,5 @@ require("lsp.cmp")
 require("lsp.ui")
 -- 上下文竖线
 require("plugin-config.indent-blankline")
+-- 代码格式化
+require("lsp.null-ls")

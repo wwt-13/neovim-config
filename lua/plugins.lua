@@ -105,6 +105,12 @@ packer.startup({
 		-- indent-blankline上下文竖线插件(用于方便的定位当前上下文的)
 		use("lukas-reineke/indent-blankline.nvim")
 
+		-- formatter:专门的代码格式化插件
+		-- use("mhartington/formatter.nvim")
+
+		-- formatter的配置太麻烦,感觉不如null-ls来的方便
+		use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
+
 		--------------------------colorscheme----------------------------
 		-- tokyonight
 		use("folke/tokyonight.nvim")
