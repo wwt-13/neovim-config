@@ -20,3 +20,9 @@ require("plugin-config.lualine")
 require("plugin-config.nvim-treesitter")
 -- 内置LSP
 require("lsp.setup")
+-- 代码补全
+require("lsp.cmp")
+-- ui美化(非插件)
+require("lsp.ui")
+-- 上下文竖线
+require("plugin-config.indent-blankline")

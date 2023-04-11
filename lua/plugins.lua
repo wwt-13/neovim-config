@@ -33,7 +33,7 @@ packer.startup({
 		use({ "nvim-tree/nvim-tree.lua", requires = "nvim-tree/nvim-web-devicons" })
 
 		-- bufferlines插件:用于将Neovim的buffer图形化显示成类似VSCode中标签页的形式
-		use({ "akinsho/bufferline.nvim", requires = { "kyazdani42/nvim-web-devicons", "moll/vim-bbye" }})
+		use({ "akinsho/bufferline.nvim", requires = { "kyazdani42/nvim-web-devicons", "moll/vim-bbye" } })
 
 		-- nvim-lualine插件:用于状态栏信息显示
 		-- 当前的编辑模式,光标所在的行号,列号,当前文件大小,编码格式,当前git分支等状态
@@ -45,7 +45,7 @@ packer.startup({
 		-- 指定:checkhealth telescope会发现Warning,这是因为telescope需要ripgrep和fd的子项目依赖
 		-- 这里可能还会提示缺失nvim-treesitter,这个暂时不用管,之后代码高亮章节才会使用
 		-- 手动通过brew安装即可(brew的牛逼之处啊)
-		use { 'nvim-telescope/telescope.nvim', requires = { "nvim-lua/plenary.nvim" } }
+		use({ 'nvim-telescope/telescope.nvim', requires = { "nvim-lua/plenary.nvim" } })
 
 		-- nvim-treesitter:代码高亮插件
 		-- 因为nvim-treesitter插件版本必须和特定的language parser版本匹配,所以需要指定run=":TSUpdate"同步更新组件
@@ -67,10 +67,43 @@ packer.startup({
 		-- 		由于文章是一年前写的,目前nvim-lsp-installer插件已不再维护,作者将其升级为了mason.nvim,所以这里要装mason.nvim
 		-- 3. 配置对应语言服务端
 		-- 4. 查看LSP连接状态:lua print(vim.inspect(vim.lsp.buf_get_clients())),连接成功即大功告成
-		use({ "neovim/nvim-lspconfig" })
-		use({ "williamboman/mason.nvim" })
-    	use({ "williamboman/mason-lspconfig.nvim" })
+		use("neovim/nvim-lspconfig")
+		use("williamboman/mason.nvim")
+		use("williamboman/mason-lspconfig.nvim")
 
+		-- 配置代码补全插件nvim-cmp,和LSP类似的,最好先了解一下几个相关概念
+		-- 1. 补全引擎
+		-- 		就是为neovim提供代码补全核心功能的插件,nvim-cmp
+		-- 2. 补全源
+		-- 		就是补全引擎所需的数据来源,一般由Language Server提供
+		-- 3. snippet引擎
+		-- 		自定义代码片段的引擎,常见的有vsnip,luasnip等等
+		-- 接下来安装补全所需的相关插件
+		-- 补全引擎
+		use("hrsh7th/nvim-cmp")
+		-- snippet 引擎
+		use("hrsh7th/vim-vsnip")
+		-- 补全源(cmp开头的都是插件补全来源)
+		-- 也就是说当你输入一个变量的时候,可以从多个来源显示补全内容
+		-- 代码片段补全
+		use("hrsh7th/cmp-vsnip")
+		-- nvim内置LSP补全内容
+		use("hrsh7th/cmp-nvim-lsp") -- { name = nvim_lsp }
+		-- 当前buffer补全
+		use("hrsh7th/cmp-buffer") -- { name = 'buffer' },
+		-- 提供路径的补全
+		use("hrsh7th/cmp-path") -- { name = 'path' }
+		-- 提供命令行补全
+		use("hrsh7th/cmp-cmdline") -- { name = 'cmdline' }
+
+		-- 常见编程语言代码片段
+		use("rafamadriz/friendly-snippets")
+
+		-- 小图标插件(里面内置了很多小图标)
+		use("onsails/lspkind.nvim")
+
+		-- indent-blankline上下文竖线插件(用于方便的定位当前上下文的)
+		use("lukas-reineke/indent-blankline.nvim")
 
 		--------------------------colorscheme----------------------------
 		-- tokyonight
