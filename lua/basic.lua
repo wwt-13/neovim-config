@@ -1,5 +1,6 @@
--- 设置光标样式为竖线
-vim.o.guicursor = "a:ver25-Cursor/lCursor-blinkwait300-blinkon200-blinkoff150"
+-- 设置光标样式为竖线(其中Cursor/lCursor为设置高对比度Cursor)
+vim.o.guicursor = "a:ver30-blinkwait300-blinkon200-blinkoff150-Cursor/lCursor"
+
 -- vim.o.guicursor="a:ver25-blinkon0"
 -- utf-8
 vim.g.encoding="utf-8"

@@ -13,7 +13,6 @@
 -- package.path = package.path .. ';' .. '/usr/share/luajit-2.1.0-beta3/jit/?.lua;'
 -- package.path = package.path .. ";~/.local/share/nvim/site/pack/packer/start/?.lua"
 
-
 -- 指定 Neovim 使用 LuaJIT
 -- vim.cmd('set rtp+=/usr/share/luajit-2.1.0-beta3/')
 -- vim.g.loaded_luajit = true
@@ -45,7 +44,7 @@ packer.startup({
 		-- 指定:checkhealth telescope会发现Warning,这是因为telescope需要ripgrep和fd的子项目依赖
 		-- 这里可能还会提示缺失nvim-treesitter,这个暂时不用管,之后代码高亮章节才会使用
 		-- 手动通过brew安装即可(brew的牛逼之处啊)
-		use({ 'nvim-telescope/telescope.nvim', requires = { "nvim-lua/plenary.nvim" } })
+		use({ "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } })
 
 		-- nvim-treesitter:代码高亮插件
 		-- 因为nvim-treesitter插件版本必须和特定的language parser版本匹配,所以需要指定run=":TSUpdate"同步更新组件
@@ -111,6 +110,9 @@ packer.startup({
 		-- formatter的配置太麻烦,感觉不如null-ls来的方便
 		use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
 
+		-- dashboard-nvim:启动页面设置
+		use({ "glepnir/dashboard-nvim", requires = { "nvim-tree/nvim-web-devicons" } })
+
 		--------------------------colorscheme----------------------------
 		-- tokyonight
 		use("folke/tokyonight.nvim")
@@ -122,15 +124,12 @@ packer.startup({
 				return require("packer.util").float({ border = "single" })
 			end,
 		},
-	}
+	},
 })
 -- 设置每次保存plugins.lua就自动安装插件
-pcall(
-	vim.cmd
-	[[
+pcall(vim.cmd([[
 		augroup packer_user_config
 		autocmd!
 		autocmd BufWritePost plugins.lua source <afile> | PackerSync
 		augroup end
-	]]
-)
+	]]))

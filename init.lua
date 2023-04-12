@@ -28,3 +28,5 @@ require("lsp.ui")
 require("plugin-config.indent-blankline")
 -- 代码格式化
 require("lsp.null-ls")
+-- 启动页自定义
+require("plugin-config.db")
